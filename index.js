@@ -1,19 +1,7 @@
 
 
-
-// fetch("http://localhost:3000/horrors", {
-//   method: 'POST',
-//   headers: {"Content-Type": "application/json"},
-//   body: JSON.stringify({
-//     "name": "test2",
-//     "rating": 10
-//   }),
-//   redirect: 'follow'
-// })
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-
+const nameInput = document.querySelector('#name');
+const ratingInput = document.querySelector('#rating')
 
 function render() {
   let dataHtml = ''
@@ -30,3 +18,20 @@ function render() {
 }  
 
 render()
+
+document.querySelector('#submit').addEventListener('click', (e) => {
+  e.preventDefault()
+  fetch("http://localhost:3000/horrors", {
+  method: 'POST',
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    "name": nameInput.value,
+    "rating": ratingInput.value
+  }),
+  redirect: 'follow'
+})
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .then(render())
+  .catch(error => console.log('error', error));
+});
